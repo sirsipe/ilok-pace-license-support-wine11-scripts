@@ -1,6 +1,10 @@
-# PRELIMINARY WORK UNDER VERIFICATION! YOU SHOULDN'T USE THIS YET!
+# NO GUARANTEES! 
 
-Really.
+Only very minimal testing has been done.
+
+I have verified that e.g. standalone *NeuralDSP Archtype: John Mayer X* works with Wine 11, under Ubuntu Studio 26.04, using workarounds introduced in this script. 
+
+Also the VST plugin is tested working with **Carla** when using still unofficial build of [yabridge](https://github.com/robbert-vdh/yabridge). Currently latest yabridge *release* is 5.1.1 and it does **NOT** work, but the latest `master` **build** seems to work and newest builds can be found from [here](https://github.com/robbert-vdh/yabridge/actions?query=branch%3Amaster). I tested with [this particular build](https://github.com/robbert-vdh/yabridge/actions/runs/25067934796). **Ardour**, **REAPER** and other DAWs I haven't tested yet. 
 
 # PACE License Support 6.0.0 on Wine 11
 
@@ -22,7 +26,7 @@ This is intentionally done for very specific [scope](#scope), as I'm hoping for 
 3. Apply `winetricks dxvk` patch. This fixes the unresponsive GUI.
 4. Launch you NeuralDSP plugin. It should **not** try to install license components anymore, but it should go straight to activation.
 
-**NOTE:** I have verified that e.g. standalone *NeuralDSP Archtype: John Mayer X* works with Wine 11. Also the VST plugin is tested working with Carla when using still unofficial build of yabridge. Currently latest yabridge release 5.1.1 is NOT working, but the latest `master` build can be found from here: https://github.com/robbert-vdh/yabridge/actions?query=branch%3Amaster
+
 
 ## Scope
 
@@ -43,12 +47,29 @@ Required commands:
 - `msiinfo` and `msibuild` from `msitools`
 - `unzip`
 
-On Ubuntu, install the available packages with:
+### On Ubuntu (Studio) 26.04:
 
 ```sh
-sudo apt install git wine winetricks msitools unzip
+sudo apt install git msitools unzip
 ```
 
+Unfortunately Ubuntu 26.04 comes with Wine 10, so Wine 11 must be obtained from [WineHQ](https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu).
+1. Download and add the repository key, e.g.:
+   ```
+   sudo mkdir -pm755 /etc/apt/keyrings
+   wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key -
+   ```
+
+3.  Add the sources file, e.g. (Ubuntu 26.04 !!):
+   ```
+   sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/resolute/winehq-resolute.sources
+   ```
+4. Update and install:
+   ```
+   sudo apt update
+   sudo apt install wine-stable winetricks
+   ```
+   
 Then verify Wine:
 
 ```sh
@@ -56,6 +77,8 @@ wine --version
 ```
 
 The output **must** report Wine 11.x.
+
+
 
 ## STEP 2 - Download PACE License Support
 
